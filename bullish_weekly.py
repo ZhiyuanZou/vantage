@@ -35,7 +35,7 @@ for s in symbols:
         time.sleep(5)
         continue
  
-output_file = open("output.sel", "w")
+output_file = open("weekly.sel", "w")
 output_file.write("\n".join(bullish_weekly))
 text_file.close()
 output_file.close()
