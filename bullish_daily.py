@@ -32,9 +32,14 @@ bullish_daily = []
 ts = TimeSeries(key = 'MKAV2AXSQSPRE2R0',output_format = 'pandas')
 for s in symbols:
     try:
+<<<<<<< HEAD
         data, meta_data = ts.get_daily_adjusted(symbol = s)
         close_price = data["close"]
         print close_price
+=======
+        data, meta_data = ts.(symbol = s)
+        close_price = data["close"]
+>>>>>>> d0efa5ed3806c61fc15f9046cb4a992ba84914c9
         sma10 = np.mean(close_price[-10:-1])
         sma15 = np.mean(close_price[-15:-1])
         sma20 = np.mean(close_price[-20:-1])
