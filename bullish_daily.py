@@ -15,41 +15,30 @@ from alpha_vantage.timeseries import TimeSeries
 text_file = open("weekly.sel", "r")
 symbols = text_file.read().split()
 bullish_daily = []
-#ti = TechIndicators(key = 'MKAV2AXSQSPRE2R0',output_format = 'pandas')
-#for s in symbols:
-#    try:
-#        data, meta_data = ti.get_sma(symbol = s, interval = 'weekly', time_period = 10, series_type = 'close')
-#        sma10 = data['SMA'][-1]
-#        data, meta_data = ti.get_sma(symbol = s, interval = 'weekly', time_period = 15, series_type = 'close')
-#        sma15 = data['SMA'][-1]
-#        data, meta_data = ti.get_sma(symbol = s, interval = 'weekly', time_period = 20, series_type = 'close')
-#        sma20 = data['SMA'][-1]
-#        if (sma10 > sma15 and sma15 > sma20):
-#            bullish_weekly.append(s)
-#    except HTTPError:
-#        time.sleep(30)
+cross_SMA = []
 
 ts = TimeSeries(key = 'MKAV2AXSQSPRE2R0',output_format = 'pandas')
 for s in symbols:
     try:
-<<<<<<< HEAD
         data, meta_data = ts.get_daily_adjusted(symbol = s)
         close_price = data["close"]
-        print close_price
-=======
-        data, meta_data = ts.(symbol = s)
-        close_price = data["close"]
->>>>>>> d0efa5ed3806c61fc15f9046cb4a992ba84914c9
+        high5 = max(data["high"][-5:-1])
+        low5 = min(data["low"][-5:-1])
         sma10 = np.mean(close_price[-10:-1])
         sma15 = np.mean(close_price[-15:-1])
         sma20 = np.mean(close_price[-20:-1])
         if (sma10 > sma15 and sma15 > sma20):
             bullish_daily.append(s)
+            if (high5 >= sma10 and low5 <= sma20):
+                cross_SMA.append(s)
     except HTTPError:
         time.sleep(5)
         continue
  
 output_file = open("daily.sel", "w")
-output_file.write("\n".join(bullish_weekly))
+output_file.write("\n".join(bullish_daily))
+cross_SMA_file = open("cross.sel", "w")
+cross_SMA_file.write("\n".join(cross_SMA))
 text_file.close()
 output_file.close()
+cross_SMA_file.close()
