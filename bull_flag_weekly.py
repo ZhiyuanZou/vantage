@@ -10,6 +10,7 @@ from alpha_vantage.techindicators import TechIndicators
 from urllib2 import HTTPError
 import time
 import numpy as np
+import sys
 from alpha_vantage.timeseries import TimeSeries
 
 text_file = open("weekly.txt", "r")
@@ -30,7 +31,7 @@ for s in symbols:
                     bull_flag.append(s)
                     break
     except:
-        print "Unexpected error:", s
+        print s, ", Unexpected error:", sys.exc_info()[0]
         unprocessed.append(s)
         continue
 
@@ -42,3 +43,4 @@ output_file = open("bull_flag_weekly.txt", "w")
 output_file.write("\n".join(bull_flag))
 output_file.close()
 text_file.close()
+print "bull_flag_weekly finished!"
